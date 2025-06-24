@@ -16,7 +16,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased" x-data="{ sidebarOpen: false, sidebarCollapsed: false }">
+<body class="font-sans antialiased" x-data="{ sidebarOpen: false, sidebarCollapsed: localStorage.getItem('sidebarCollapsed') === 'true' }" x-init="$watch('sidebarCollapsed', value => localStorage.setItem('sidebarCollapsed', value))">
     @php
         $role = Auth::check() ? Auth::user()->role : null;
     @endphp
@@ -27,7 +27,7 @@
         @if ($role === 'admin')
             {{-- Sidebar desktop --}}
             <div class="hidden md:flex transition-all duration-300 ease-in-out"
-                :class="{ 'w-64': !sidebarCollapsed, 'w-7': sidebarCollapsed }">
+                :class="{ 'w-64': !sidebarCollapsed, 'w-13': sidebarCollapsed }">
                 @include('layouts.sidebar')
             </div>
 
@@ -79,13 +79,13 @@
                         @endif
                     </div>
 
-                    <div class="shrink-0 flex items-center">
+                    {{-- <div class="shrink-0 flex items-center">
                         <a href="{{ route('dashboard') }}">
                             <img src="{{ asset('/images/logo.png') }}" alt="Logo Toko Koi A3"
                                 class="w-10 h-10 object-contain">
                         </a>
                         {{ __('A3 KOI Farm') }}
-                    </div>
+                    </div> --}}
 
 
                     {{-- Tombol Logout --}}
