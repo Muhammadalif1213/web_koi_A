@@ -20,35 +20,35 @@
                 </div>
 
                 {{-- Container Tabel --}}
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
+                <div class="bg-black bg-opacity-20 rounded-lg shadow-md overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         {{-- ... thead ... --}}
-                        <thead class="bg-gray-50 dark:bg-gray-700">
+                        <thead class="bg-black bg-opacity-25">
                             <tr>
                                 <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">
                                     Kode Produk</th>
                                 <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">
                                     Nama Produk</th>
                                 <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">
                                     Berat</th>
                                 <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">
                                     Harga</th>
                                 <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">
                                     Foto Produk</th>
                                 <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">
                                     Stok</th>
                                 <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-blue-200 uppercase tracking-wider">
                                     Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tbody class="divide-y divide-white/10">
                             @forelse ($products as $index => $product)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
@@ -72,13 +72,15 @@
                                         {{ $product->stok }}</td>
                                     <td
                                         class="px-6 py-4 whitespace-nowrap text-sm font-medium flex items-center space-x-2">
-                                        <button type="button" @click="
+                                        <button type="button"
+                                            @click="
                                             editModalOpen = true; 
                                             fetch('{{ route('product.showJson', $product) }}')
                                                 .then(res => res.json())
                                                 .then(data => { editingProduct = data; });
                                             editFormAction = '{{ route('product.update', $product) }}';
-                                        " class="text-white bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md">Edit</button>
+                                        "
+                                            class="text-white bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md">Edit</button>
 
                                         {{-- Form hapus diberi id unik berdasarkan kode produk --}}
                                         <form id="delete-form-{{ $product->kode_produk }}"
@@ -150,31 +152,32 @@
                     });
             });
             // Script BARU untuk form EDIT
-        document.getElementById('editProductForm')?.addEventListener('submit', function(event) {
-            event.preventDefault();
-            let form = event.target;
-            let formData = new FormData(form);
-            let actionUrl = form.closest('[x-data]').__x.$data.editFormAction; // Ambil URL dari state Alpine
+            document.getElementById('editProductForm')?.addEventListener('submit', function(event) {
+                event.preventDefault();
+                let form = event.target;
+                let formData = new FormData(form);
+                let actionUrl = form.closest('[x-data]').__x.$data.editFormAction; // Ambil URL dari state Alpine
 
-            fetch(actionUrl, {
-                method: 'POST', // Form method spoofing akan menangani ini sebagai PUT/PATCH
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json',
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    alert(data.message);
-                    location.reload();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat memperbarui produk.');
+                fetch(actionUrl, {
+                        method: 'POST', // Form method spoofing akan menangani ini sebagai PUT/PATCH
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                'content'),
+                            'Accept': 'application/json',
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            alert(data.message);
+                            location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat memperbarui produk.');
+                    });
             });
-        });
         </script>
 </x-app-layout>

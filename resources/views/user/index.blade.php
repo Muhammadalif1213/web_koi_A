@@ -20,9 +20,9 @@
                 </div>
 
                 {{-- Container Tabel - Dibuat scrollable di layar kecil untuk responsivitas --}}
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-700">
+                <div class="bg-black bg-opacity-20 rounded-lg shadow-md overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-black bg-opacity-25">
                             <tr>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -41,7 +41,7 @@
                                     Action</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tbody class="divide-y divide-white/10">
                             @forelse ($users as $index => $user)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
@@ -78,7 +78,7 @@
                         </tbody>
                     </table>
                     {{-- Paginasi --}}
-                    <div class="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                    <div class="p-4 border-t border-white/10">
                         {{ $users->links() }}
                     </div>
                 </div>
